@@ -52,7 +52,7 @@ categories
 locations
 transactions
 
-    ![Alt text](image.png)
+    ![image](https://github.com/user-attachments/assets/9a79ea60-7f0b-47e6-9d32-6788001c8daa)
 
 ## Planejamento de scripts
 
@@ -85,7 +85,7 @@ Crie validações Zod para os dados (caso isso não seja possível, notifique o 
 
 Use um seeder ou crie dados manualmente para popular e demonstrar as telas e componentes da interface do App.
 
-[3 pontos] Implementação dos Componentes e Estilos das Telas:
+Implementação dos Componentes e Estilos das Telas:
 
 Crie e estilize todos os componentes de UI necessários para o seu aplicativo, você pode usar NativeWind ou qualquer outra técnica de estilização compatível com o React Native;
 
@@ -93,7 +93,7 @@ Espera-se ver a maioria das telas do app estilizadas e o usuário podendo navega
 
 Certifique-se de ter implementado todos os fluxos que você propôs, todas as telas do figma devem ser acessíveis, desta vez com todos os componentes propostos (no checkpoint anterior a entrega era parcial).
 
-[3 pontos] Integração de Funcionalidades:
+Integração de Funcionalidades:
 
 ### outros tópicos
 
