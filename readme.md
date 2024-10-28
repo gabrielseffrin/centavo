@@ -52,7 +52,8 @@ categories
 locations
 transactions
 
-    ![image](https://github.com/user-attachments/assets/9a79ea60-7f0b-47e6-9d32-6788001c8daa)
+    ![image](https://github.com/user-attachments/assets/0fbb2112-6bdd-48e8-8c0d-c59881cb95e3)
+
 
 ## Planejamento de scripts
 
@@ -75,23 +76,22 @@ transactions
 **Defesa do código em vídeo**
 - [ ] Vídeo
 
-### 3
-
 **Implementação do Modelo de Dados**
 
-Todas as tabelas (ou Schemas, para bancos NoSQL) devem estar implementados no App ou na API utilizada pelo App;
+- [ ] Todas as tabelas (ou Schemas, para bancos NoSQL) devem estar implementados no App ou na API utilizada pelo App;
 
-Crie validações Zod para os dados (caso isso não seja possível, notifique o professor para elaborarmos uma alternativa);
+- [ ] Crie validações Zod para os dados (caso isso não seja possível, notifique o professor para elaborarmos uma alternativa);
 
-Use um seeder ou crie dados manualmente para popular e demonstrar as telas e componentes da interface do App.
+- [ ] Use um seeder ou crie dados manualmente para popular e demonstrar as telas e componentes da interface do App.
 
 Implementação dos Componentes e Estilos das Telas:
 
-Crie e estilize todos os componentes de UI necessários para o seu aplicativo, você pode usar NativeWind ou qualquer outra técnica de estilização compatível com o React Native;
+- [ ] Crie e estilize todos os componentes de UI necessários para o seu aplicativo, você pode usar NativeWind ou qualquer outra técnica de estilização compatível com o React Native;
 
-Espera-se ver a maioria das telas do app estilizadas e o usuário podendo navegar livremente entre elas (usando Expo Router), desta vez com dados reais do banco ou da API para demonstrar o funcionamento da interface;
+- [ ] Espera-se ver a maioria das telas do app estilizadas e o usuário podendo navegar livremente entre elas (usando Expo Router), desta vez com dados reais do banco ou da API para demonstrar o funcionamento da interface;
 
-Certifique-se de ter implementado todos os fluxos que você propôs, todas as telas do figma devem ser acessíveis, desta vez com todos os componentes propostos (no checkpoint anterior a entrega era parcial).
+- [ ] Certifique-se de ter implementado todos os fluxos que você propôs, todas as telas do figma devem ser acessíveis, desta vez com todos os componentes propostos (no checkpoint anterior a entrega era parcial).
+
 
 Integração de Funcionalidades:
 
