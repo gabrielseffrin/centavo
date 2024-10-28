@@ -60,7 +60,7 @@ transactions
 
 **Roteamento de Telas**
 
-[ ] Espera-se ver todas as telas do app estilizadas e o usuário podendo navegar livremente entre elas, mesmo que com dados fake para simular o funcionamento da interface;
+[X] Espera-se ver todas as telas do app estilizadas e o usuário podendo navegar livremente entre elas, mesmo que com dados fake para simular o funcionamento da interface;
 [ ] Configure o Expo Router, implemente o(s) layout.tsx necessários;
 [ ] Configure os meta-dados das telas (como o título das Headers, no caso da navegação Stack);
 [ ] Certifique-se de ter implementado no Expo Router todos os fluxos que você propôs, todas as telas do figma devem ser acessíveis, mesmo que não contenham todos os componentes propostos.
