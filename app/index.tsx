@@ -1,28 +1,50 @@
-// app/login/index.tsx
-import { Image } from 'expo-image';
 import React from 'react';
-import { router } from "expo-router";
+import { Image } from 'expo-image';
+import { View, StyleSheet } from 'react-native';
+import { Link, router } from "expo-router";
+import ButtonComponent from '../components/button';
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
+import CustomTextInput from '../components/customInputText';
+import CustomText from '../components/customText';
 
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+export default function loginScreen() {
+  
+  const checkLogin = () => {
+    router.replace('/home')
+  };
+  
 
-const entrar = () => {
-  router.replace('/login');
-};
-
-export default function creen() {
   return (
+
     <ActionSheetProvider>
-      <View style={styles.container}>
-        <Text style={styles.welcomeText}>bem-vindo!</Text>
+    <View style={styles.container}>
+
+      <Image source={require('../assets/centavo.png')} style={{ width: 200, height: 200 }} />
+      
+      <View style={styles.inputContainer}>
+        <CustomTextInput 
+          placeholder="e-mail" 
+          placeholderTextColor="#A0A0A0" 
+        />
         
-        <Image source={require('../assets/centavo.png')} style={{ width: 200, height: 200 }} />
-
-
-        <TouchableOpacity style={styles.loginButton} onPress={entrar}>
-          <Text style={styles.loginButtonText}>ENTRAR</Text>
-        </TouchableOpacity>
+        <CustomTextInput 
+          placeholder="senha" 
+          placeholderTextColor="#A0A0A0" 
+          secureTextEntry 
+        />
+        
+        <Link href="/register">
+          <CustomText style={styles.forgotPasswordText}>esqueceu sua senha?</CustomText>
+        </Link>
       </View>
+      
+      <Link href="/register">
+        <CustomText style={styles.registerText}>cadastre-se</CustomText>
+      </Link>
+
+      <ButtonComponent title='LOGIN' onPress={checkLogin}></ButtonComponent>
+
+    </View>
     </ActionSheetProvider>
   );
 }
@@ -33,36 +55,38 @@ const styles = StyleSheet.create({
     backgroundColor: '#FBF8F0',
     alignItems: 'center',
     justifyContent: 'center',
-    fontFamily: 'MontserratAlternates_400Regular',
   },
   welcomeText: {
     fontSize: 24,
-    fontFamily: 'MontserratAlternates_400Regular',
+    fontFamily: '',
     color: '#000',
     marginBottom: 10,
   },
-  logoImage: { // Estilo para a imagem do logo
-    width: 100, // Ajuste o tamanho conforme necessário
-    height: 100,
-    marginBottom: 20,
+  logo: {
+    fontSize: 36,
+    color: '#000',
+    marginBottom: 40,
   },
-  loginButton: {
-    width: '60%',
-    height: 50,
-    backgroundColor: '#E0E0E0',
-    borderRadius: 25,
-    alignItems: 'center',
-    justifyContent: 'center',
+  inputContainer: {
+    width: '80%',
+    marginBottom: 20,
+    backgroundColor: '#FFF',
+    padding: 15,
+    borderRadius: 15,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.3,
-    shadowRadius: 2,
-    elevation: 4,
+    shadowOpacity: 0.2,
+    shadowRadius: 1.5,
+    elevation: 5,
   },
-  loginButtonText: {
-    fontSize: 18,
+  forgotPasswordText: {
+    fontSize: 12,
     color: '#A0A0A0',
-    fontFamily: 'MontserratAlternates_400Regular',
+    textAlign: 'right',
+  },
+  registerText: {
+    fontSize: 14,
+    color: '#A0A0A0',
+    marginVertical: 15,
   },
 });
-

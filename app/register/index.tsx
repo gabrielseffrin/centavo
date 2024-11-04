@@ -1,24 +1,29 @@
 // app/login/index.tsx
 import React from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
+import ButtonComponent from '../../components/button';
+import CustomText from '../../components/customText';
+import CustomTextInput from '../../components/customInputText';
 
 export default function LoginScreen() {
   return (
 
 
     <View style={styles.container}>
-      <Text style={styles.welcomeText}>bem-vindo!</Text>
-      <Text style={styles.logo}>CENTAVO</Text>
+      <CustomText style={styles.welcomeText}>bem-vindo!</CustomText>
+      <CustomText style={styles.logo}>CENTAVO</CustomText>
       
       <View style={styles.inputContainer}>
-        <TextInput style={styles.input} placeholder="e-mail" placeholderTextColor="#A0A0A0" />
-        <TextInput style={styles.input} placeholder="e-mail" placeholderTextColor="#A0A0A0" />
-        <TextInput style={styles.input} placeholder="senha" placeholderTextColor="#A0A0A0" secureTextEntry />
+        <CustomTextInput style={styles.input} placeholder="e-mail" placeholderTextColor="#A0A0A0" />
+        <CustomTextInput style={styles.input} placeholder="sennha" placeholderTextColor="#A0A0A0" secureTextEntry />
+        <CustomTextInput style={styles.input} placeholder="confirme a senha" placeholderTextColor="#A0A0A0" secureTextEntry />
       </View>
 
-      <TouchableOpacity style={styles.loginButton}>
-        <Text style={styles.loginButtonText} onPress={() => alert('teste')}>LOGIN</Text>
-      </TouchableOpacity>
+      <ButtonComponent 
+        title='LOGIN' 
+        onPress={() => alert('funciona')}>
+      </ButtonComponent>
+      
     </View>
   );
 }
@@ -29,18 +34,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#FBF8F0',
     alignItems: 'center',
     justifyContent: 'center',
-    fontFamily: 'MontserratAlternates_400Regular',
 
   },
   welcomeText: {
     fontSize: 24,
-    fontFamily: 'MontserratAlternates_400Regular',
     color: '#000',
     marginBottom: 10,
   },
   logo: {
     fontSize: 36,
-    fontFamily: 'MontserratAlternates_400Regular',
     color: '#000',
     marginBottom: 40,
   },
@@ -63,19 +65,16 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     paddingHorizontal: 15,
     marginBottom: 10,
-    fontFamily: 'MontserratAlternates_400Regular',
   },
   forgotPasswordText: {
     fontSize: 12,
     color: '#A0A0A0',
     textAlign: 'right',
-    fontFamily: 'MontserratAlternates_400Regular',
   },
   registerText: {
     fontSize: 14,
     color: '#A0A0A0',
     marginVertical: 15,
-    fontFamily: 'MontserratAlternates_400Regular',
   },
   loginButton: {
     width: '60%',
@@ -93,6 +92,5 @@ const styles = StyleSheet.create({
   loginButtonText: {
     fontSize: 18,
     color: '#000000',
-    fontFamily: 'MontserratAlternates_400Regular',
   },
 });
