@@ -92,7 +92,6 @@ O aplicativo é voltado para pessoas que desejam uma maneira simples e eficiente
 
 
 - [ ] Geração de relatórios: O app deverá fornecer relatórios financeiros mensais que ajudam o usuário a visualizar o destino do seu dinheiro.
-
 - [ ] Exportação de dados: Permitir que os usuários exportem seus dados financeiros para planilhas ou PDFs.
 - [ ] Versão desktop: Expansão para uma versão de desktop que ofereça uma interface mais completa e recursos adicionais de controle financeiro.
 - [ ] Notificações personalizadas: Lembrar o usuário de registrar suas despesas ou notificá-lo quando atingir um determinado limite de gastos em uma categoria.
