@@ -5,9 +5,6 @@ type CustomTextProps = TextProps & {
     children: React.ReactNode;
 };
 
-
-
-
 export default function CustomText({ children, style, ...props }: CustomTextProps) {
 
     return (

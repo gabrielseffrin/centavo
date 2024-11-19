@@ -6,6 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+    "newArchEnabled": true,
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -27,9 +28,13 @@
       [
         "expo-asset",
         {
-          "assets": ["./assets/centavo.png"]
+          "assets": [
+            "./assets/centavo.png"
+          ]
         }
-      ]
+      ],
+      "expo-font",
+      "expo-router"
     ]
   }
 }

@@ -1,9 +1,9 @@
 // app/login/index.tsx
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import ButtonComponent from '../../components/button';
-import CustomText from '../../components/customText';
-import CustomTextInput from '../../components/customInputText';
+import ButtonComponent from '../components/button';
+import CustomText from '../components/customText';
+import CustomTextInput from '../components/customInputText';
 
 export default function LoginScreen() {
   return (

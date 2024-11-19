@@ -10,7 +10,7 @@ import CustomText from '../components/customText';
 export default function loginScreen() {
   
   const checkLogin = () => {
-    router.replace('/home')
+    router.replace('/(auth)/(home)/home')
   };
   
 

@@ -1,6 +1,6 @@
 // app/_layout.tsx
 import { Stack } from 'expo-router';
-import { SplashScreen } from 'expo-router';
+import * as SplashScreen from 'expo-splash-screen';
 import { useFonts, MontserratAlternates_400Regular } from '@expo-google-fonts/montserrat-alternates';
 import { useEffect } from 'react';
 import {ActionSheetProvider} from '@expo/react-native-action-sheet';
