@@ -3,7 +3,6 @@ import React from "react";
 import { View, TouchableOpacity, StyleSheet } from "react-native";
 import FullScreen from "../../../components/containers/FullScreen";
 import CustomText from "../../../components/customText";
-import { Image } from "react-native";
 
 export default function HomeScreen() {
   return (
@@ -21,16 +20,12 @@ export default function HomeScreen() {
         <CustomText style={styles.balanceText}>balanço: x.xxx,xx</CustomText>
       </View>
 
-      <TouchableOpacity style={styles.expenseButton}>
+      <TouchableOpacity style={styles.incomeButton}>
         <CustomText style={[styles.buttonText]}>informar despesa</CustomText>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.incomeButton}>
         <CustomText style={styles.buttonText}>informar entrada</CustomText>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.categoryButton}>
-        <CustomText style={styles.buttonText}>categorias</CustomText>
       </TouchableOpacity>
 
       {/*      

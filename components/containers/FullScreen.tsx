@@ -20,8 +20,8 @@ export default function FullScreen({ children }: FullScreenProps) {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 10,
-        backgroundColor: '#FBF8F0', // cor de fundo padrão
+        flex: 1,
+        backgroundColor: '#FBF8F0',
         alignItems: 'center', 
         justifyContent: 'center',
     },
