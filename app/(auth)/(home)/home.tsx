@@ -61,6 +61,7 @@ export default function HomeScreen() {
         title="Informe sua Despesa"
         onSave={handleSave}
         categories={categories}
+        tipo={1}
       />
 
       {/* Modal para Renda */}
@@ -70,6 +71,7 @@ export default function HomeScreen() {
         title="Informe sua Renda"
         onSave={handleSave}
         categories={categories}
+        tipo={2}
       />
     </FullScreen>
   );

@@ -7,40 +7,33 @@ import {
   StyleSheet,
   Alert,
 } from "react-native";
-import CustomText from "../components/customText";
-import { Picker } from "@react-native-picker/picker";
+import CustomText from "./customText";
 
 interface ModalProps {
   visible: boolean;
   onClose: () => void;
-  onSave: (data: { value: string; category: string; location: string }) => void;
+  onSave: (data: { nome: string; tipo: number }) => void; // Alterado para refletir categorias
   title: string;
-  tipo: number;
-  categories: { id: number, categoria: string; tipo: number }[];
 }
 
-export default function ModalDespesa({ 
+export default function CadastroCategoriaModal({ 
   visible, 
   onClose, 
   onSave, 
   title,
-  categories,
-  tipo
- }: ModalProps) {
-  const [value, setValue] = useState("");
-  const [category, setCategory] = useState<string | null>(null);
-  const [location, setLocation] = useState("");
+}: ModalProps) {
+  const [nome, setNome] = useState("");
+  const [tipo, setTipo] = useState<number | null>(null);
 
   const handleSave = () => {
-    if (!value || !category || !location) {
+    if (!nome || tipo === null) {
       Alert.alert("Erro", "Todos os campos são obrigatórios!");
       return;
     }
 
-    onSave({ value, category, location });
-    setValue("");
-    setLocation("");
-    setCategory("");
+    onSave({ nome, tipo });
+    setNome("");
+    setTipo(null);
     onClose();
   };
 
@@ -61,35 +54,35 @@ export default function ModalDespesa({
 
           <TextInput
             style={styles.input}
-            placeholder="Valor"
-            keyboardType="numeric"
-            value={value}
-            onChangeText={setValue}
+            placeholder="Nome da Categoria"
+            value={nome}
+            onChangeText={setNome}
           />
-          <Picker
-            selectedValue={category}
-            onValueChange={(itemValue) => setCategory(itemValue)}
-            style={styles.picker}
-          >
-            <Picker.Item label="selecione uma categoria" value={null} />
-            {categories.filter((cat) => cat.tipo === tipo).map((cat) => (
-              <Picker.Item key={cat.id} label={cat.categoria} value={cat.categoria} />
-
-            ))}
-
-          </Picker>
-
-          <TextInput
-            style={styles.input}
-            placeholder="Local"
-            value={location}
-            onChangeText={setLocation}
-          />
+          
+          <View style={styles.radioGroup}>
+            <TouchableOpacity
+              style={[
+                styles.radioButton,
+                tipo === 1 && styles.radioSelected,
+              ]}
+              onPress={() => setTipo(1)}
+            >
+              <CustomText style={styles.radioText}>Despesa</CustomText>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[
+                styles.radioButton,
+                tipo === 2 && styles.radioSelected,
+              ]}
+              onPress={() => setTipo(2)}
+            >
+              <CustomText style={styles.radioText}>Renda</CustomText>
+            </TouchableOpacity>
+          </View>
 
           <TouchableOpacity style={styles.confirmButton} onPress={handleSave}>
             <CustomText style={styles.confirmButtonText}>Salvar</CustomText>
           </TouchableOpacity>
-
         </View>
       </View>
     </Modal>
@@ -102,13 +95,6 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0,0,0,0.5)",
     justifyContent: "center",
     alignItems: "center",
-  },
-  picker: {
-    borderWidth: 1,
-    borderColor: "#DDD",
-    borderRadius: 5,
-    marginBottom: 20,
-    width: "100%", height: 50,
   },
   modalContent: {
     width: "90%",
@@ -136,23 +122,22 @@ const styles = StyleSheet.create({
     padding: 10,
     marginVertical: 10,
   },
-  modalButtons: {
+  radioGroup: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "space-around",
     width: "100%",
-    marginVertical: 20,
+    marginVertical: 10,
   },
-  secondaryButton: {
-    backgroundColor: "#000",
+  radioButton: {
+    backgroundColor: "#EEE",
     padding: 10,
     borderRadius: 5,
-    flex: 1,
-    marginHorizontal: 5,
-    alignItems: "center",
   },
-  secondaryButtonText: {
-    color: "#FFF",
-    fontSize: 14,
+  radioSelected: {
+    backgroundColor: "#4169E1",
+  },
+  radioText: {
+    color: "#000",
   },
   confirmButton: {
     backgroundColor: "#000",

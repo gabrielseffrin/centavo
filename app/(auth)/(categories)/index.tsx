@@ -1,31 +1,53 @@
-import React from "react";
-import { View, TouchableOpacity, StyleSheet, ScrollView } from "react-native";
+import React, { useState } from "react";
+import { View, TouchableOpacity, StyleSheet, ScrollView, Alert } from "react-native";
+import CadastroCategoriaModal from "../../../components/cadastro-categoria-modal";
 import FullScreen from "../../../components/containers/FullScreen";
 import CustomText from "../../../components/customText";
-import categorias from "../../../db.json";
+import db from "../../../db.json";
 
 export default function HomeScreen() {
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [categorias, setCategorias] = useState<{ id: number; categoria: string; tipo: number }[]>([]);
+
+  const handleSaveCategoria = (data: { nome: string; tipo: number }) => {
+    const novaCategoria = {
+      id: categorias.length + 1,
+      categoria: data.nome,
+      tipo: data.tipo,
+    };
+
+    setCategorias([...categorias, novaCategoria]);
+    Alert.alert("Sucesso", "Categoria cadastrada com sucesso!");
+  };
+
   return (
     <FullScreen>
       <View style={styles.header}>
-        <CustomText style={styles.welcomeText}>categorias</CustomText>
+        <CustomText style={styles.welcomeText}>Categorias</CustomText>
       </View>
 
-      <TouchableOpacity style={styles.incomeButton}>
-        <CustomText style={[styles.buttonText]}>cadastrar categoria</CustomText>
+      <TouchableOpacity
+        style={styles.incomeButton}
+        onPress={() => setModalVisible(true)}
+      >
+        <CustomText style={styles.buttonText}>Cadastrar Categoria</CustomText>
       </TouchableOpacity>
+      s
+      <CadastroCategoriaModal
+        visible={isModalVisible}
+        onClose={() => setModalVisible(false)}
+        title="Cadastrar Categoria"
+        onSave={handleSaveCategoria}
+      />
 
-      {/* ScrollView para permitir rolagem das categorias */}
       <ScrollView style={styles.scrollView}>
-        {categorias.map((item) => (
+        {db.map((item) => (
           <View key={item.id} style={styles.infoBox}>
-            <CustomText style={styles.categoryText}>
-              {item.categoria}
-            </CustomText>
+            <CustomText style={styles.categoryText}>{item.categoria}</CustomText>
             <CustomText
               style={item.tipo === 1 ? styles.expenseText : styles.incomeText}
             >
-              {item.tipo === 1 ? "Gasto" : "Entrada"}
+              {item.tipo === 1 ? "Despesa" : "Renda"}
             </CustomText>
           </View>
         ))}
@@ -39,6 +61,10 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     width: "100%",
     padding: 20,
+  },
+  welcomeText: {
+    fontSize: 24,
+    color: "#000",
   },
   incomeButton: {
     backgroundColor: "#FFF",
@@ -54,8 +80,8 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   scrollView: {
-    flex: 1, // Faz o ScrollView preencher toda a altura disponível
-    width: "90%", // Faz o ScrollView preencher toda a largura da tela
+    flex: 1,
+    width: "90%",
   },
   infoBox: {
     width: "100%",
@@ -63,19 +89,6 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 10,
     marginVertical: 20,
-  },
-  welcomeText: {
-    fontSize: 24,
-    color: "#000",
-  },
-  username: {
-    color: "#4169E1", // azul para destacar o username
-  },
-  categoryBox: {
-    padding: 10,
-    marginVertical: 5,
-    backgroundColor: "#f9f9f9",
-    borderRadius: 5,
   },
   categoryText: {
     fontSize: 18,
