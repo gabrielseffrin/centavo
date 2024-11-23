@@ -23,15 +23,13 @@ export default function Layout() {
 
   return (
     <ActionSheetProvider>
+  
+      {/* Configuração do Stack */}
       <Stack
         screenOptions={{
           headerShown: false,
         }}
       />
-      
     </ActionSheetProvider>
-
-    
-    
   );
 }
