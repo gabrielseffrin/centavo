@@ -1,11 +1,30 @@
-// home.tsx
-import React from "react";
-import { View, TouchableOpacity, StyleSheet } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, TouchableOpacity, StyleSheet, Alert } from "react-native";
 import FullScreen from "../../../components/containers/FullScreen";
 import CustomText from "../../../components/customText";
-import { Image } from "react-native";
+import Modal from "../../../components/modal";
+import { saveExpense } from "../../../services/apiServices";
+import db from "../../../db.json";
 
 export default function HomeScreen() {
+  const [isDespesaModalVisible, setDespesaModalVisible] = useState(false);
+  const [isRendaModalVisible, setRendaModalVisible] = useState(false);
+  const [categories, setCategories] = useState<{ id: number; categoria: string; tipo: number }[]>([]);
+
+  useEffect(() => {
+    // Carregando as categorias do JSON local
+    setCategories(db); // Já utiliza o JSON importado
+  }, []);
+  
+  const handleSave = async (data: { value: string; category: string; location: string }) => {
+    try {
+      await saveExpense(data);
+      Alert.alert("Sucesso", "Despesa salva com sucesso!");
+    } catch (error) {
+      Alert.alert("Erro", "Não foi possível salvar a despesa.");
+    }
+  };
+
   return (
     <FullScreen>
       <View style={styles.header}>
@@ -21,23 +40,37 @@ export default function HomeScreen() {
         <CustomText style={styles.balanceText}>balanço: x.xxx,xx</CustomText>
       </View>
 
-      <TouchableOpacity style={styles.expenseButton}>
-        <CustomText style={[styles.buttonText]}>informar despesa</CustomText>
+      <TouchableOpacity
+        style={styles.incomeButton}
+        onPress={() => setDespesaModalVisible(true)}
+      >
+        <CustomText style={styles.buttonText}>informar despesa</CustomText>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.incomeButton}>
-        <CustomText style={styles.buttonText}>informar entrada</CustomText>
+      <TouchableOpacity
+        style={styles.incomeButton}
+        onPress={() => setRendaModalVisible(true)}
+      >
+        <CustomText style={styles.buttonText}>informar renda</CustomText>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.categoryButton}>
-        <CustomText style={styles.buttonText}>categorias</CustomText>
-      </TouchableOpacity>
+      {/* Modal para Despesa */}
+      <Modal
+        visible={isDespesaModalVisible}
+        onClose={() => setDespesaModalVisible(false)}
+        title="Informe sua Despesa"
+        onSave={handleSave}
+        categories={categories}
+      />
 
-      {/*      
-      <Image
-        source={require("../../../assets/centavo.png")}
-        style={{ width: 200, height: 50, position: "absolute", bottom: 20 }}
-      />*/}
+      {/* Modal para Renda */}
+      <Modal
+        visible={isRendaModalVisible}
+        onClose={() => setRendaModalVisible(false)}
+        title="Informe sua Renda"
+        onSave={handleSave}
+        categories={categories}
+      />
     </FullScreen>
   );
 }
@@ -79,25 +112,7 @@ const styles = StyleSheet.create({
     color: "#333",
     fontSize: 16,
   },
-  expenseButton: {
-    backgroundColor: "#000",
-    width: "80%",
-    padding: 15,
-    borderRadius: 25,
-    alignItems: "center",
-    marginBottom: 10,
-  },
   incomeButton: {
-    backgroundColor: "#FFF",
-    width: "80%",
-    padding: 15,
-    borderRadius: 25,
-    alignItems: "center",
-    borderColor: "#D0D0D0",
-    borderWidth: 1,
-    marginBottom: 10,
-  },
-  categoryButton: {
     backgroundColor: "#FFF",
     width: "80%",
     padding: 15,
@@ -109,10 +124,6 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 16,
-  },
-  logo: {
-    fontSize: 24,
-    fontFamily: "",
     color: "#000",
   },
 });

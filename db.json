@@ -1,0 +1,38 @@
+[
+    {
+      "id": 1,
+      "categoria": "Alimentação",
+      "tipo": 1
+    },
+    {
+      "id": 2,
+      "categoria": "Transporte",
+      "tipo": 1
+    },
+    {
+      "id": 3,
+      "categoria": "Salário",
+      "tipo": 2
+    },
+    {
+      "id": 4,
+      "categoria": "Investimentos",
+      "tipo": 2
+    },
+    {
+      "id": 5,
+      "categoria": "Lazer",
+      "tipo": 1
+    },
+    {
+      "id": 6,
+      "categoria": "Lazer",
+      "tipo": 1
+    },
+    {
+      "id": 7,
+      "categoria": "Lazer",
+      "tipo": 1
+    }
+  ]
+  

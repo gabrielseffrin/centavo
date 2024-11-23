@@ -28,7 +28,10 @@ export default function Layout() {
           headerShown: false,
         }}
       />
+      
     </ActionSheetProvider>
+
+    
     
   );
 }
