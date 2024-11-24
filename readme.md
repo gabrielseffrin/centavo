@@ -78,12 +78,12 @@ O aplicativo é voltado para pessoas que desejam uma maneira simples e eficiente
 
 ### basicas
 
-- [ ] Registro de despesas: O usuário poderá inserir as suas despesas conforme elas ocorrem.
-- [ ] Registro de rendas: Permite ao usuário registrar suas fontes de entrada de dinheiro.
-- [ ] Comparativo despesas x rendas: Exibe um balanço financeiro entre despesas e receitas ao longo do mês.
-- [ ] Categorização de despesas: Os gastos podem ser organizados em categorias (ex: alimentação, transporte, lazer, etc.).
-- [ ] Registro de usuário (autenticação): O usuário deve se registrar e fazer login no aplicativo para que suas informações sejam armazenadas de forma personalizada.
-- [ ] Consulta de despesas e rendas: O usuário poderá visualizar uma lista de suas despesas e rendas já inseridas, com filtros por data e categoria.
+- [X] Registro de despesas: O usuário poderá inserir as suas despesas conforme elas ocorrem.
+- [X] Registro de rendas: Permite ao usuário registrar suas fontes de entrada de dinheiro.
+- [X] Comparativo despesas x rendas: Exibe um balanço financeiro entre despesas e receitas ao longo do mês.
+- [X] Categorização de despesas: Os gastos podem ser organizados em categorias (ex: alimentação, transporte, lazer, etc.).
+- [X] Registro de usuário (autenticação): O usuário deve se registrar e fazer login no aplicativo para que suas informações sejam armazenadas de forma personalizada.
+- [X] Consulta de despesas e rendas: O usuário poderá visualizar uma lista de suas despesas e rendas já inseridas, com filtros por data e categoria.
 - [ ] Edição e exclusão de despesas e rendas: O usuário poderá editar ou excluir despesas e rendas registradas anteriormente.
 - [ ] Edição de perfil do usuário: O usuário poderá atualizar suas informações pessoais (ex: nome, e-mail, senha).
 
@@ -134,17 +134,17 @@ transactions (tabela fato, contendo as transações de entradas e saídas)
 
 **Roteamento de Telas ** _1 a 2 semanas_
 
-- [ ] Espera-se ver todas as telas do app estilizadas e o usuário podendo navegar livremente entre elas, mesmo que com dados fake para simular o funcionamento da interface;
-- [ ] Configure o Expo Router, implemente o(s) layout.tsx necessários;
-- [ ] Configure os meta-dados das telas (como o título das Headers, no caso da navegação Stack);
-- [ ] Certifique-se de ter implementado no Expo Router todos os fluxos que você propôs, todas as telas do figma devem ser acessíveis, mesmo que não contenham todos os componentes propostos.
+- [X] Espera-se ver todas as telas do app estilizadas e o usuário podendo navegar livremente entre elas, mesmo que com dados fake para simular o funcionamento da interface;
+- [X] Configure o Expo Router, implemente o(s) layout.tsx necessários;
+- [X] Configure os meta-dados das telas (como o título das Headers, no caso da navegação Stack);
+- [X] Certifique-se de ter implementado no Expo Router todos os fluxos que você propôs, todas as telas do figma devem ser acessíveis, mesmo que não contenham todos os componentes propostos.
 
 **Esqueletos das Telas **_1 semana a 1.5 semanas_
 
-- [ ] Todas as telas devem estar presentes nesta versão;
-- [ ] Crie os componentes necessários e use-os nas telas;
-- [ ] Certifique-se de que o app está pronto para iniciar a integração com banco de dados ou APIs (conforme o caso);
-- [ ] Use dados fake ou placeholders para demonstrar como a tela deve ser quando estiver pronta.
+- [X] Todas as telas devem estar presentes nesta versão;
+- [X] Crie os componentes necessários e use-os nas telas;
+- [X] Certifique-se de que o app está pronto para iniciar a integração com banco de dados ou APIs (conforme o caso);
+- [X] Use dados fake ou placeholders para demonstrar como a tela deve ser quando estiver pronta.
 
 **Defesa do código em vídeo**
 
