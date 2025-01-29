@@ -12,8 +12,7 @@ export default function HomeScreen() {
   const [categories, setCategories] = useState<{ id: number; categoria: string; tipo: number }[]>([]);
 
   useEffect(() => {
-    // Carregando as categorias do JSON local
-    setCategories(db); // Já utiliza o JSON importado
+    setCategories(db); 
   }, []);
   
   const handleSave = async (data: { value: string; category: string; location: string }) => {
