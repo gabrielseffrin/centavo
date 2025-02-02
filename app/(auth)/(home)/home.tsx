@@ -3,24 +3,87 @@ import { View, TouchableOpacity, StyleSheet, Alert } from "react-native";
 import FullScreen from "../../../components/containers/FullScreen";
 import CustomText from "../../../components/customText";
 import Modal from "../../../components/modal";
-import { saveExpense } from "../../../services/apiServices";
-import db from "../../../db.json";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useCategorias } from "../../context/categoriasContext";
+import { getTransacao } from "../../../services/apiServices";
 
 export default function HomeScreen() {
   const [isDespesaModalVisible, setDespesaModalVisible] = useState(false);
   const [isRendaModalVisible, setRendaModalVisible] = useState(false);
-  const [categories, setCategories] = useState<{ id: number; categoria: string; tipo: number }[]>([]);
+  const { categorias } = useCategorias();
+  const [user, setUser] = useState<any>(null);
+  const [transacoesCarregadas, setTransacoesCarregadas] = useState(false);
+  const [despesas, setDespesas] = useState(0);
+  const [renda, setRenda] = useState(0);
+  const [balanco, setBalanco] = useState(0);
+  const [reload, setReload] = useState(false);
+
+  const fetchTransacoes = async (userId: number) => {
+    try {
+      const response = await getTransacao(userId);
+      if (response) {
+        const despesas = response.filter(
+          (transacao: { category_type_id: number }) =>
+            transacao.category_type_id === 2
+        );
+
+        const totalD = despesas.reduce(
+          (acc: number, transacao: { amount: string }) =>
+            acc + parseFloat(transacao.amount || "0"),
+          0
+        );
+
+        setDespesas(totalD);
+
+        const renda = response.filter(
+          (transacao: { category_type_id: number }) =>
+            transacao.category_type_id === 1
+        );
+
+        const totalR = renda.reduce(
+          (acc: number, transacao: { amount: string }) =>
+            acc + parseFloat(transacao.amount || "0"),
+          0
+        );
+
+        setRenda(totalR);
+        setBalanco(totalR - totalD);
+      }
+    } catch (error) {
+      console.error("Erro ao recuperar as transações:", error);
+    }
+  };
 
   useEffect(() => {
-    setCategories(db); 
+    const fetchUserData = async () => {
+      try {
+        const userData = await AsyncStorage.getItem("user");
+        if (userData) {
+          const parsedUser = JSON.parse(userData);
+          setUser(parsedUser);
+          console.log("dados do usuário:", parsedUser);
+        }
+      } catch (error) {
+        console.error("Erro ao recuperar os dados do usuário:", error);
+      }
+    };
+
+    fetchUserData();
   }, []);
-  
-  const handleSave = async (data: { value: string; category: string; location: string }) => {
+
+  useEffect(() => {
+    if (user) {
+      fetchTransacoes(user.id);
+    }
+  }, [user, reload]); 
+
+  const handleSave = async () => {
     try {
-      await saveExpense(data);
-      Alert.alert("Sucesso", "Despesa salva com sucesso!");
+      await fetchTransacoes(user.id);
+      setReload(!reload);
+      console.log("Transações atualizadas");
     } catch (error) {
-      Alert.alert("Erro", "Não foi possível salvar a despesa.");
+      Alert.alert("Erro", "Não foi possível atualizar os valores.");
     }
   };
 
@@ -28,15 +91,20 @@ export default function HomeScreen() {
     <FullScreen>
       <View style={styles.header}>
         <CustomText style={styles.welcomeText}>
-          bem-vindo <CustomText style={styles.username}>username</CustomText>!
+          bem-vindo{" "}
+          <CustomText style={styles.username}>
+            {/* @ts-ignore */}
+            {user ? user.name : "Usuário"}
+          </CustomText>
+          !
         </CustomText>
       </View>
 
       <View style={styles.infoBox}>
         <CustomText style={styles.infoText}>neste mês</CustomText>
-        <CustomText style={styles.expenseText}>despesas: x.xxx,xx</CustomText>
-        <CustomText style={styles.incomeText}>renda: x.xxx,xx</CustomText>
-        <CustomText style={styles.balanceText}>balanço: x.xxx,xx</CustomText>
+        <CustomText style={styles.expenseText}>despesas: {despesas}</CustomText>
+        <CustomText style={styles.incomeText}>renda: {renda}</CustomText>
+        <CustomText style={styles.balanceText}>balanço: {balanco}</CustomText>
       </View>
 
       <TouchableOpacity
@@ -53,25 +121,36 @@ export default function HomeScreen() {
         <CustomText style={styles.buttonText}>informar renda</CustomText>
       </TouchableOpacity>
 
-      {/* Modal para Despesa */}
-      <Modal
-        visible={isDespesaModalVisible}
-        onClose={() => setDespesaModalVisible(false)}
-        title="Informe sua Despesa"
-        onSave={handleSave}
-        categories={categories}
-        tipo={1}
-      />
+      {/* definindo o ID para passar ao Modal */}
+      {user && user.id ? (
+        <>
+          <Modal
+            visible={isDespesaModalVisible}
+            onClose={() => {
+              setDespesaModalVisible(false), handleSave;
+            }}
+            title="Informe sua Despesa"
+            onSave={handleSave}
+            categories={categorias}
+            tipo={2}
+            id={user.id}
+          />
 
-      {/* Modal para Renda */}
-      <Modal
-        visible={isRendaModalVisible}
-        onClose={() => setRendaModalVisible(false)}
-        title="Informe sua Renda"
-        onSave={handleSave}
-        categories={categories}
-        tipo={2}
-      />
+          <Modal
+            visible={isRendaModalVisible}
+            onClose={() => {
+              setRendaModalVisible(false), handleSave;
+            }}
+            title="Informe sua Renda"
+            onSave={handleSave}
+            categories={categorias}
+            tipo={1}
+            id={user.id}
+          />
+        </>
+      ) : (
+        <CustomText>Usuário não encontrado!</CustomText>
+      )}
     </FullScreen>
   );
 }

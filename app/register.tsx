@@ -1,29 +1,36 @@
-// app/login/index.tsx
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import ButtonComponent from '../components/button';
-import CustomText from '../components/customText';
+import React, { useState } from 'react';
+import { View, Alert, StyleSheet } from 'react-native';
 import CustomTextInput from '../components/customInputText';
+import ButtonComponent from '../components/button';
+import { registerUser } from '../services/apiServices';
 
-export default function LoginScreen() {
+export default function RegisterScreen() {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
+  const handleRegister = async () => {
+    if (password !== confirmPassword) {
+      Alert.alert('Erro', 'As senhas não coincidem.');
+      return;
+    }
+
+    try {
+      await registerUser({ name, email, password });
+      Alert.alert('Sucesso', 'Cadastro realizado!');
+    } catch (error) {
+      Alert.alert('Erro', 'Não foi possível realizar o cadastro.');
+    }
+  };
+
   return (
-
-
-    <View style={styles.container}>
-      <CustomText style={styles.welcomeText}>bem-vindo!</CustomText>
-      <CustomText style={styles.logo}>CENTAVO</CustomText>
-      
-      <View style={styles.inputContainer}>
-        <CustomTextInput style={styles.input} placeholder="e-mail" placeholderTextColor="#A0A0A0" />
-        <CustomTextInput style={styles.input} placeholder="sennha" placeholderTextColor="#A0A0A0" secureTextEntry />
-        <CustomTextInput style={styles.input} placeholder="confirme a senha" placeholderTextColor="#A0A0A0" secureTextEntry />
-      </View>
-
-      <ButtonComponent 
-        title='LOGIN' 
-        onPress={() => alert('funciona')}>
-      </ButtonComponent>
-      
+    <View>
+      <CustomTextInput placeholder="Nome" value={name} onChangeText={setName} />
+      <CustomTextInput placeholder="E-mail" value={email} onChangeText={setEmail} />
+      <CustomTextInput placeholder="Senha" secureTextEntry value={password} onChangeText={setPassword} />
+      <CustomTextInput placeholder="Confirmar Senha" secureTextEntry value={confirmPassword} onChangeText={setConfirmPassword} />
+      <ButtonComponent title="CADASTRAR" onPress={handleRegister} />
     </View>
   );
 }

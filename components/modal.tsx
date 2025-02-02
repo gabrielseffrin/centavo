@@ -9,14 +9,16 @@ import {
 } from "react-native";
 import CustomText from "../components/customText";
 import { Picker } from "@react-native-picker/picker";
+import { saveTransaction } from "../services/apiServices";
 
 interface ModalProps {
   visible: boolean;
   onClose: () => void;
-  onSave: (data: { value: string; category: string; location: string }) => void;
+  onSave: () => void;
   title: string;
   tipo: number;
-  categories: { id: number, categoria: string; tipo: number }[];
+  categories: { id: number; categoria: string; tipo: number }[];
+  id: number; 
 }
 
 export default function ModalDespesa({ 
@@ -25,23 +27,29 @@ export default function ModalDespesa({
   onSave, 
   title,
   categories,
-  tipo
- }: ModalProps) {
+  tipo, 
+  id
+}: ModalProps) {
   const [value, setValue] = useState("");
-  const [category, setCategory] = useState<string | null>(null);
+  const [category, setCategory] = useState<string | undefined>(undefined); 
   const [location, setLocation] = useState("");
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!value || !category || !location) {
       Alert.alert("Erro", "Todos os campos são obrigatórios!");
       return;
     }
-
-    onSave({ value, category, location });
-    setValue("");
-    setLocation("");
-    setCategory("");
-    onClose();
+  
+    try {
+      await saveTransaction(id, Number(category), parseFloat(value));
+      setValue("");
+      setLocation("");
+      setCategory(undefined);
+      onClose();
+      Alert.alert('Sucesso', 'Movimentação Cadastrada!');
+    } catch (error) {
+      Alert.alert("Erro", "Não foi possível salvar a despesa.");
+    }
   };
 
   return (
@@ -66,17 +74,16 @@ export default function ModalDespesa({
             value={value}
             onChangeText={setValue}
           />
+
           <Picker
             selectedValue={category}
             onValueChange={(itemValue) => setCategory(itemValue)}
             style={styles.picker}
           >
-            <Picker.Item label="selecione uma categoria" value={null} />
+            <Picker.Item label="selecione uma categoria" value={undefined} />
             {categories.filter((cat) => cat.tipo === tipo).map((cat) => (
-              <Picker.Item key={cat.id} label={cat.categoria} value={cat.categoria} />
-
+              <Picker.Item key={cat.id} label={cat.categoria} value={cat.id} /> 
             ))}
-
           </Picker>
 
           <TextInput
@@ -108,7 +115,8 @@ const styles = StyleSheet.create({
     borderColor: "#DDD",
     borderRadius: 5,
     marginBottom: 20,
-    width: "100%", height: 50,
+    width: "100%",
+    height: 50,
   },
   modalContent: {
     width: "90%",
@@ -135,24 +143,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 10,
     marginVertical: 10,
-  },
-  modalButtons: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    width: "100%",
-    marginVertical: 20,
-  },
-  secondaryButton: {
-    backgroundColor: "#000",
-    padding: 10,
-    borderRadius: 5,
-    flex: 1,
-    marginHorizontal: 5,
-    alignItems: "center",
-  },
-  secondaryButtonText: {
-    color: "#FFF",
-    fontSize: 14,
   },
   confirmButton: {
     backgroundColor: "#000",

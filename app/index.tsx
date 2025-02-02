@@ -1,16 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Image } from 'expo-image';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Alert } from 'react-native';
 import { Link, router } from "expo-router";
 import ButtonComponent from '../components/button';
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import CustomTextInput from '../components/customInputText';
 import CustomText from '../components/customText';
+import { loginUser } from '../services/apiServices';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function loginScreen() {
   
-  const checkLogin = () => {
-    router.replace('/(auth)/(home)/home')
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleLogin = async () => {
+    try {
+      const response = await loginUser(email, password);
+      Alert.alert('Sucesso', 'Login realizado!');
+      await AsyncStorage.setItem('user', JSON.stringify(response.user));
+      router.replace('/(auth)/(home)/home');
+    } catch (error) {
+      Alert.alert('Erro', 'Falha no login. Verifique suas credenciais.');
+    }
   };
   
 
@@ -25,11 +37,15 @@ export default function loginScreen() {
         <CustomTextInput 
           placeholder="e-mail" 
           placeholderTextColor="#A0A0A0" 
+          value={email} 
+          onChangeText={setEmail}
         />
         
         <CustomTextInput 
           placeholder="senha" 
           placeholderTextColor="#A0A0A0" 
+          value={password} 
+          onChangeText={setPassword}
           secureTextEntry 
         />
         
@@ -42,7 +58,7 @@ export default function loginScreen() {
         <CustomText style={styles.registerText}>cadastre-se</CustomText>
       </Link>
 
-      <ButtonComponent title='LOGIN' onPress={checkLogin}></ButtonComponent>
+      <ButtonComponent title='LOGIN' onPress={handleLogin}></ButtonComponent>
 
     </View>
     </ActionSheetProvider>

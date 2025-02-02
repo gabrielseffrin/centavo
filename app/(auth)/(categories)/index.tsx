@@ -1,24 +1,18 @@
 import React, { useState } from "react";
-import { View, TouchableOpacity, StyleSheet, ScrollView, Alert } from "react-native";
+import {
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+} from "react-native";
 import CadastroCategoriaModal from "../../../components/cadastro-categoria-modal";
 import FullScreen from "../../../components/containers/FullScreen";
 import CustomText from "../../../components/customText";
-import db from "../../../db.json";
+import { useCategorias } from "../../context/categoriasContext";
 
 export default function HomeScreen() {
   const [isModalVisible, setModalVisible] = useState(false);
-  const [categorias, setCategorias] = useState<{ id: number; categoria: string; tipo: number }[]>([]);
-
-  const handleSaveCategoria = (data: { nome: string; tipo: number }) => {
-    const novaCategoria = {
-      id: categorias.length + 1,
-      categoria: data.nome,
-      tipo: data.tipo,
-    };
-
-    setCategorias([...categorias, novaCategoria]);
-    Alert.alert("Sucesso", "Categoria cadastrada com sucesso!");
-  };
+  const { categorias, carregarCategorias } = useCategorias(); 
 
   return (
     <FullScreen>
@@ -32,22 +26,24 @@ export default function HomeScreen() {
       >
         <CustomText style={styles.buttonText}>Cadastrar Categoria</CustomText>
       </TouchableOpacity>
-      s
+
       <CadastroCategoriaModal
         visible={isModalVisible}
         onClose={() => setModalVisible(false)}
         title="Cadastrar Categoria"
-        onSave={handleSaveCategoria}
+        carregarCategorias={carregarCategorias}
       />
 
       <ScrollView style={styles.scrollView}>
-        {db.map((item) => (
+        {categorias.map((item) => (
           <View key={item.id} style={styles.infoBox}>
-            <CustomText style={styles.categoryText}>{item.categoria}</CustomText>
+            <CustomText style={styles.categoryText}>
+              {item.categoria}
+            </CustomText>
             <CustomText
-              style={item.tipo === 1 ? styles.expenseText : styles.incomeText}
+              style={item.tipo === 2 ? styles.expenseText : styles.incomeText}
             >
-              {item.tipo === 1 ? "Despesa" : "Renda"}
+              {item.tipo === 1 ? "Renda" : "Despesa"}
             </CustomText>
           </View>
         ))}

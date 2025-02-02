@@ -8,33 +8,47 @@ import {
   Alert,
 } from "react-native";
 import CustomText from "./customText";
+import { saveCategorias } from "../services/apiServices";
 
 interface ModalProps {
   visible: boolean;
   onClose: () => void;
-  onSave: (data: { nome: string; tipo: number }) => void; // Alterado para refletir categorias
   title: string;
+  carregarCategorias: () => Promise<void>; 
 }
 
-export default function CadastroCategoriaModal({ 
-  visible, 
-  onClose, 
-  onSave, 
+export default function CadastroCategoriaModal({
+  visible,
+  onClose,
   title,
+  carregarCategorias, 
 }: ModalProps) {
   const [nome, setNome] = useState("");
   const [tipo, setTipo] = useState<number | null>(null);
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!nome || tipo === null) {
       Alert.alert("Erro", "Todos os campos são obrigatórios!");
       return;
     }
 
-    onSave({ nome, tipo });
-    setNome("");
-    setTipo(null);
-    onClose();
+    try {
+      const response = await saveCategorias(nome, tipo);
+
+      if (response) {
+        Alert.alert("Sucesso", "Categoria cadastrada com sucesso!");
+        setNome("");
+        setTipo(null);
+        onClose();
+        
+        await carregarCategorias();
+      } else {
+        Alert.alert("Erro", "Não foi possível cadastrar a categoria.");
+      }
+    } catch (error) {
+      Alert.alert("Erro", "Ocorreu um erro ao cadastrar a categoria.");
+      console.error("Erro ao cadastrar categoria:", error);
+    }
   };
 
   return (
@@ -63,18 +77,18 @@ export default function CadastroCategoriaModal({
             <TouchableOpacity
               style={[
                 styles.radioButton,
-                tipo === 1 && styles.radioSelected,
+                tipo === 2 && styles.radioSelected,
               ]}
-              onPress={() => setTipo(1)}
+              onPress={() => setTipo(2)}
             >
               <CustomText style={styles.radioText}>Despesa</CustomText>
             </TouchableOpacity>
             <TouchableOpacity
               style={[
                 styles.radioButton,
-                tipo === 2 && styles.radioSelected,
+                tipo === 1 && styles.radioSelected,
               ]}
-              onPress={() => setTipo(2)}
+              onPress={() => setTipo(1)}
             >
               <CustomText style={styles.radioText}>Renda</CustomText>
             </TouchableOpacity>
