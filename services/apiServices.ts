@@ -14,6 +14,16 @@ export const loginUser = async (email: any, password: any) => {
   }
 };
 
+export const registerUser = async(name: string, email: string, password: string) => {
+  try {
+    const response = await api.post('/api/users', {name, email, password});
+    return response.data;
+  } catch (error) {
+    console.error('Erro ao cadastrar usuário:', error);
+  }
+}
+
+
 export const saveCategorias = async (name: string, category_type: number) => {
   try {
     const response = await api.post('/api/registra-categoria', {name, category_type} );
