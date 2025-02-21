@@ -10,6 +10,7 @@ import {
 import CustomText from "../components/customText";
 import { Picker } from "@react-native-picker/picker";
 import { saveTransaction } from "../services/apiServices";
+import { router } from "expo-router";
 
 interface ModalProps {
   visible: boolean;
@@ -46,7 +47,9 @@ export default function ModalDespesa({
       setLocation("");
       setCategory(undefined);
       onClose();
+      
       Alert.alert('Sucesso', 'Movimentação Cadastrada!');
+      
     } catch (error) {
       Alert.alert("Erro", "Não foi possível salvar a despesa.");
     }
