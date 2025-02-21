@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { View, TouchableOpacity, StyleSheet, Alert } from "react-native";
 import FullScreen from "../../../components/containers/FullScreen";
 import CustomText from "../../../components/customText";
@@ -6,6 +6,7 @@ import Modal from "../../../components/modal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useCategorias } from "../../context/categoriasContext";
 import { getTransacao } from "../../../services/apiServices";
+import { router, useFocusEffect } from "expo-router";
 
 export default function HomeScreen() {
   const [isDespesaModalVisible, setDespesaModalVisible] = useState(false);
@@ -71,17 +72,20 @@ export default function HomeScreen() {
     fetchUserData();
   }, []);
 
-  useEffect(() => {
-    if (user) {
-      fetchTransacoes(user.id);
-    }
-  }, [user, reload]); 
+  useFocusEffect(
+    useCallback(() => {
+      if (user) {
+        fetchTransacoes(user.id);
+      }
+    }, [user])
+  );
 
   const handleSave = async () => {
     try {
       await fetchTransacoes(user.id);
       setReload(!reload);
       console.log("Transações atualizadas");
+      router.replace('/(auth)/(home)/home');
     } catch (error) {
       Alert.alert("Erro", "Não foi possível atualizar os valores.");
     }

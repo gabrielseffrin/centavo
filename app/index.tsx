@@ -34,6 +34,7 @@ export default function LoginScreen() {
       Alert.alert('Sucesso', 'Login realizado!');
       await AsyncStorage.setItem('user', JSON.stringify(response.user));
       router.replace('/(auth)/(home)/home');
+      
     } catch (error) {
       Alert.alert('Erro', 'Falha no login. Verifique suas credenciais.');
     }
