@@ -19,7 +19,9 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "versionCode": 1,
+      "package": "com.gabrielseffrin.centavo"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -35,6 +37,14 @@
       ],
       "expo-font",
       "expo-router"
-    ]
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "de2cb283-92a2-4117-8e5f-4b90ecdff5f9"
+      }
+    }
   }
 }
